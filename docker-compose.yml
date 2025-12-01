@@ -1,0 +1,10 @@
+services:
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docusaurus-docker-search
+    container_name: docusaurus-docs
+    ports:
+      - "8080:80"
+    restart: unless-stopped
