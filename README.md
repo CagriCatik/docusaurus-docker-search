@@ -1,17 +1,22 @@
 # Docusaurus Docker Search
 
-Repository structure shown in the project tree includes GitHub workflow automation, a Docusaurus webpage directory, Docker configuration, and Nginx setup for serving the static build.
+[![Deploy](https://img.shields.io/github/actions/workflow/status/CagriCatik/docusaurus-docker-search/deploy.yml?label=Deploy)](https://github.com/CagriCatik/docusaurus-docker-search/actions/workflows/deploy.yml)
+[![Docusaurus](https://img.shields.io/badge/Docusaurus-v3-blue)](https://docusaurus.io)
+[![Mermaid](https://img.shields.io/badge/Mermaid-Diagrams-green)](https://mermaid.js.org)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-lightblue)](https://www.docker.com)
 
+This template provides a Docusaurus documentation site bundled with Docker support, enhanced Markdown Mermaid diagrams, and a local search engine. The repository includes GitHub Actions workflows, an isolated `webpage` directory for site code, container configuration, and Nginx static serving.
 
 ## Overview
 
-This project provides a Docusaurus documentation site bundled with Docker support. The `webpage` directory contains all site sources, while Docker and Nginx configurations enable containerized static hosting.
+- The project supplies a complete Docusaurus site with Mermaid rendering and built-in search.
+- The `webpage` directory contains the full site source. Docker images deliver consistent builds served by Nginx.
 
 ## Requirements
 
-Node.js 18 or newer  
-npm 8 or newer  
-Docker optional for container deployment
+Node.js 20 or newer
+npm 9 or newer
+Docker optional for container deployments
 
 ## Installation
 
@@ -23,53 +28,66 @@ npm install
 
 ## Development
 
-Start the local development server:
-
 ```bash
 npm run start
 ```
 
-The site is served at [http://localhost:3000](http://localhost:3000).
+Local development server runs at [http://localhost:3000](http://localhost:3000).
 
 ## Build
-
-Create a production build:
 
 ```bash
 npm run build
 ```
 
-The output is placed under the top-level `build` directory.
+The `build/` directory is generated at the repository root.
+
+## Search Feature
+
+- A local zero dependency search engine is preconfigured.
+- Index creation occurs during the build step and requires no external services.
+
+## Mermaid Support
+
+- Markdown files can embed diagrams using Mermaid syntax:
+
+```mermaid
+sequenceDiagram
+  participant User
+  participant Server
+  User->>Server: Request Page
+  Server->>User: Rendered Output
+```
 
 ## Deployment
 
 ### GitHub Pages
 
-A GitHub Actions workflow exists under `.github/workflows/deploy.yml`.
+Automated CI/CD is managed by `.github/workflows/deploy.yml`.
 
 ### Generic Static Hosting
 
-Upload the contents of `build/` to any static host.
+Upload the contents of `build/` to any static hosting solution.
 
 ## Docker
 
-### Build Image
+**Build**
 
 ```bash
 docker build -t docusaurus-site .
 ```
 
-### Run Container
+**Run**
 
 ```bash
 docker run -d --name docs -p 80:80 docusaurus-site
 ```
 
-Nginx serves the static output using the provided `nginx.conf`.
+Nginx uses the bundled `nginx.conf` to serve the Docusaurus build.
 
-### .dockerignore
+**.dockerignore**
 
-```
+```bash
 node_modules
 build
 .DS_Store
@@ -77,12 +95,6 @@ build
 
 ## Configuration Notes
 
-docusaurus.config.js defines global site settings.
-sidebars.js configures documentation sidebars.
-The `src` and `static` directories contain site code and assets.
-
-## Troubleshooting
-
-Port already in use: modify exposed port in the Docker run command.
-Version errors: verify Node.js and npm versions.
-Stale assets: clear browser cache or rebuild.
+`docusaurus.config.js` manages site metadata, theme settings, plugins, and Mermaid config.
+`sidebars.js` controls documentation navigation.
+`src/` and `static/` house code, pages, and assets.
