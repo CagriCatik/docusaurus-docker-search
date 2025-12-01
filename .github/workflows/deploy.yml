@@ -11,15 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18' # Match your Node.js version from package.json
-
-      - name: Navigate to Docusaurus project
-        run: cd webpage
+          node-version: "22" # must be >= 20 for Docusaurus 3.9.2
 
       - name: Install dependencies
         working-directory: ./webpage
@@ -30,7 +27,9 @@ jobs:
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.Docusaurus_TOKEN }}
           publish_dir: ./webpage/build
+          force_orphan: true
+          keep_files: false
